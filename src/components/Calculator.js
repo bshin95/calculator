@@ -1,69 +1,62 @@
 import React, { Component } from "react"
 
 class Calculator extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.state = {
-      value1: null,
-      value2: null,
-      result: null
+      value1: "",
+      value2: "",
+      result: ""
     }
 
-    // this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+    this.addNums = this.addNums.bind(this)
   }
 
   handleChange(event) {
-    console.log(`input value: ${event.target.name}`)
-    console.log(`input value: ${event.target.value}`)
-    // const {
-    //   target: { value1: num1, value2: num2 }
-    // } = event
+    const target = event.target
+    const value = target.type === "checkbox" ? target.checked : target.value
+    const name = target.name
 
-    this.setState([value1:])
+    this.setState({
+      [name]: value
+    })
 
-    console.log(`First Number: ${num1}`)
-    console.log(`Second Number: ${num2}`)
-    // this.setState({ [num1]: [num2] })
+    // console.log(this.state.value1)
+    // console.log(this.state.value2)
   }
 
-  //created a function a that would added the two numbers on click
   addNums() {
-    this.state.results = this.state.num1 + this.state.num2
-  }
-
-  handleSubmit(event) {
-    event.preventDefault()
-    console.log("Submitting form")
-    console.log(`${this.state.value1} + ${this.value.value2}`)
+    this.setState({
+      result: Number(this.state.value1) + Number(this.state.value2)
+    })
   }
 
   render() {
-    const { value1, value2 } = this.state
     return (
       <div>
         <h1>Enter your values</h1>
-        <form onSubmit={this.handleSubmit}>
-          <div>
-            <label>Value One: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              value={value1}
-              name="value1"
-            />
-          </div>
-          <div>
-            <label>Value Two: </label>
-            <input
-              onChange={this.handleChange}
-              type="number"
-              value={value2}
-              name="value2"
-            />
-          </div>
-          <button onClick={this.addNums}>Add the numbers</button>
-        </form>
+        <div>
+          <label>Value One: </label>
+          <input
+            onChange={this.handleChange}
+            type="number"
+            value={this.state.value1}
+            name="value1"
+          />
+        </div>
+        <div>
+          <label>Value Two: </label>
+          <input
+            onChange={this.handleChange}
+            type="number"
+            value={this.state.value2}
+            name="value2"
+          />
+        </div>
+        <button onClick={this.addNums}>Add the numbers</button>
+        <p>{this.state.result}</p>
       </div>
     )
   }
